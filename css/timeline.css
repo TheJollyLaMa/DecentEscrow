@@ -1,0 +1,75 @@
+/* ---------- Timeline Title ---------- */
+.timeline-title {
+    text-align: center;
+    font-size: 2rem;
+    color: #fff;
+    margin: 20px 0;
+    text-shadow: 0 0 10px gold;
+  }
+  
+  /* ---------- Timeline Container ---------- */
+  .timeline-container {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    gap: 20px;
+    padding: 20px;
+    scroll-snap-type: x mandatory;
+  }
+  
+  /* ---------- Work Order Card ---------- */
+  .workorder-card {
+    flex: 0 0 auto;
+    width: 300px;
+    height: 300px;
+    background-color: #222;
+    border: 2px solid gold;
+    border-radius: 10px;
+    box-shadow: 0 0 20px gold;
+    color: #fff;
+    padding: 20px;
+    scroll-snap-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Card Title inside Timeline Card */
+  .workorder-card .card-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: center;
+    text-shadow: 0 0 5px gold;
+  }
+  
+  /* Script Icon inside Card Title */
+  .workorder-card .card-title img {
+    width: 24px;
+    height: 24px;
+    vertical-align: middle;
+    margin-right: 5px;
+  }
+  
+  /* Card Details */
+  .workorder-card .card-details {
+    font-size: 0.9rem;
+    text-align: left;
+    width: 100%;
+  }
+  
+  /* ---------- Focus & Blur Effects on Cards ---------- */
+  /* Focused card (centered) */
+  .workorder-card.focused {
+    transform: scale(1.05);
+    filter: none;
+    opacity: 1;
+    z-index: 10;
+  }
+  
+  /* Unfocused cards */
+  .workorder-card:not(.focused) {
+    filter: blur(2px);
+    opacity: 0.7;
+  }

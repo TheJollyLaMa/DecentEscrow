@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="./img/favicon.png" type="image/x-icon">
+  <title>Decent Escrow DApp</title>
+  <link rel="stylesheet" href="./css/base.css">
+  <link rel="stylesheet" href="./css/layout.css">
+  <link rel="stylesheet" href="./css/timeline.css">
+  <!-- Load Ethers UMD -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
+</head>
+<body>
+
+  <!-- Neon/Carnival Header -->
+  <header class="header">
+    <div class="centered-title">
+      <div class="title">
+        <img src="./img/favicon.png" alt="umbrella" class="favicon">
+        <h1> - ⸬ - Decent ☂ Escrow - ⸬ -</h1>
+        <img src="./img/favicon.png" alt="umbrella" class="favicon">
+      </div>
+      <!-- Wallet address display (icons in the middle) -->
+      <div class="wallet-display" id="account">
+        <span id="wallet-address-start">0x0000</span>
+        <span class="icons">
+          <img src="./img/Eth.gif" alt="ETH Icon" class="icon">
+          <img src="./img/favicon.png" alt="Icon" class="icon">
+          <img src="./img/SecretPyramid.png" alt="Pyramid Icon" class="icon">
+          <img src="./img/favicon.png" alt="Icon" class="icon">
+          <img src="./img/Eth.gif" alt="ETH Icon" class="icon">
+        </span>
+        <span id="wallet-address-end">0000</span>
+      </div>
+    </div>
+    <!-- MetaMask Connect Button -->
+    <button id="connect-wallet" class="wallet-button">
+      <img src="./img/metamask.png" alt="MetaMask" />
+    </button>
+  </header>
+
+  <!-- Main Content Area -->
+  <div class="content">
+    <!-- Owner-Only Forms (displayed only if connected wallet is contract owner) -->
+    <div id="owner-forms" class="hidden">
+      <!-- CREATE WORK ORDER -->
+      <h2>Create Work Order</h2>
+      <form id="createWorkOrderForm">
+        <label for="worker">Worker Address:</label>
+        <input type="text" id="worker" required>
+  
+        <label for="token">Token Address:</label>
+        <input type="text" id="token" required>
+  
+        <label for="depositAmount">Deposit Amount (in token's smallest unit):</label>
+        <input type="number" id="depositAmount" required>
+  
+        <label for="workUrl">Work Order URL:</label>
+        <input type="text" id="workUrl" required>
+  
+        <label for="workDescription">Work Description:</label>
+        <input type="text" id="workDescription" required>
+  
+        <label for="lockDuration">Lock Duration (in seconds):</label>
+        <input type="number" id="lockDuration" required>
+  
+        <button type="submit">Create Work Order</button>
+      </form>
+      <div id="createResult" class="message"></div>
+  
+      <hr>
+  
+      <!-- VERIFY WORK -->
+      <h2>Verify Work</h2>
+      <form id="verifyWorkForm">
+        <label for="verifyOrderId">Work Order ID:</label>
+        <input type="number" id="verifyOrderId" required>
+        <button type="submit">Verify Work</button>
+      </form>
+      <div id="verifyResult" class="message"></div>
+  
+      <hr>
+  
+      <!-- MANUAL RELEASE -->
+      <h2>Manual Release</h2>
+      <form id="manualReleaseForm">
+        <label for="releaseOrderId">Work Order ID:</label>
+        <input type="number" id="releaseOrderId" required>
+  
+        <label for="payout">Payout Amount (in token's smallest unit):</label>
+        <input type="number" id="payout" required>
+  
+        <button type="submit">Manual Release</button>
+      </form>
+      <div id="releaseResult" class="message"></div>
+  
+      <hr>
+  
+      <!-- CANCEL WORK ORDER -->
+      <h2>Cancel Work Order</h2>
+      <form id="cancelWorkOrderForm">
+        <label for="cancelOrderId">Work Order ID:</label>
+        <input type="number" id="cancelOrderId" required>
+        <button type="submit">Cancel Work Order</button>
+      </form>
+      <div id="cancelResult" class="message"></div>
+  
+      <hr>
+  
+      <!-- EMERGENCY WITHDRAWAL -->
+      <h2>Emergency Withdrawal</h2>
+      <form id="emergencyWithdrawForm">
+        <label for="withdrawToken">Token Address:</label>
+        <input type="text" id="withdrawToken" required>
+        <label for="withdrawAmount">Amount (in token's smallest unit):</label>
+        <input type="number" id="withdrawAmount" required>
+        <button type="submit">Emergency Withdraw</button>
+      </form>
+      <div id="withdrawResult" class="message"></div>
+    </div>
+  
+    <!-- Open Workorders Timeline -->
+    <h2 class="timeline-title">Open Workorders</h2>
+    <div class="timeline-container" id="timeline-container">
+      <!-- Timeline cards (300px square with gold neon glow) will be dynamically appended here -->
+    </div>
+  </div>
+  
+  <!-- Footer for Contract Address -->
+  <div class="footer">
+    <div id="contract-address-display"></div>
+  </div>
+  
+  <script type="module" src="./js/app.js"></script> 
+</body>
+</html>

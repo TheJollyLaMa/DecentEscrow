@@ -1,0 +1,180 @@
+/* ---------- Header (Neon/Carnival Style) ---------- */
+header.header {
+    display: flex;
+    flex-direction: column;  /* stack content vertically */
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: transparent;
+    position: relative;        /* allows absolute positioning of wallet button */
+    text-align: center;
+  }
+  
+  .centered-title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;   /* center the title content */
+  }
+  
+  .title h1 {
+    margin: 0;
+    font-size: 1.6rem;
+    color: #00ffff; /* Neon cyan */
+    text-shadow:
+      0 0 5px #0ff,
+      0 0 10px #0ff,
+      0 0 20px #0ff;
+    white-space: nowrap;
+  }
+  
+  .favicon {
+    width: 40px;
+    height: 40px;
+    filter: drop-shadow(0 0 4px #0ff);
+  }
+  
+  .wallet-display {
+    margin-top: 10px;
+    font-size: 1rem;
+    text-align: center;
+  }
+  
+  /* Connect Wallet Button: Positioned in the top right */
+  .wallet-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: none;
+    border: 2px solid #00ffff; /* Neon cyan */
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+  
+  .wallet-button img {
+    width: 40px;
+    height: 40px;
+    filter: drop-shadow(0 0 4px #ff00ff);
+  }
+  
+  .inline-favicon {
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+  }
+  
+  /* ---------- Main Content Area ---------- */
+  .content {
+    max-width: 700px;
+    margin: 30px auto;
+    padding: 0 20px;
+  }
+  
+  .content h2 {
+    margin-top: 30px;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    border-bottom: 1px solid #555;
+    padding-bottom: 5px;
+  }
+  
+  /* ---------- Forms & Inputs ---------- */
+  form {
+    margin-top: 15px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+  }
+  
+  label {
+    display: block;
+    margin: 10px 0 5px;
+  }
+  
+  input[type="text"],
+  input[type="number"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #444;
+    border-radius: 4px;
+    background: #222;
+    color: #fff;
+    outline: none;
+  }
+  
+  /* ---------- Buttons ---------- */
+  button {
+    background: #00b894; /* Greenish accent */
+    color: #fff;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.2s ease;
+  }
+  
+  button:hover {
+    background: #019875;
+  }
+  
+  /* ---------- Messages ---------- */
+  .message {
+    margin-top: 10px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border-left: 4px solid #00b894;
+    border-radius: 4px;
+  }
+  
+  /* ---------- Footer ---------- */
+  .footer {
+    text-align: center;
+    margin: 20px 0;
+  }
+  
+  .footer a {
+    color: #00cec9;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.2s ease;
+  }
+  
+  .footer a:hover {
+    color: #81ecec;
+  }
+  
+  #contract-address-display {
+    text-align: center;
+    margin: 20px 0;
+    font-size: 1rem;
+  }
+  
+  /* ---------- Icons in Address Displays ---------- */
+  .icons {
+    display: inline-block;
+    vertical-align: middle;
+  }
+  
+  .icons img.icon {
+    width: 16px;
+    height: 16px;
+    margin: 0 2px;
+    vertical-align: middle;
+  }
+  
+  /* ---------- Additional Utility ---------- */
+  .connected {
+    background-color: #00b894;
+  }

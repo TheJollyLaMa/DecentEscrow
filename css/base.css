@@ -1,0 +1,33 @@
+/* Reset box sizing */
+* {
+    box-sizing: border-box;
+  }
+  
+  /* Body with a dimmed watermark background */
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    color: #fff;
+    background-color: #111; /* fallback dark color */
+    min-height: 100vh;
+    position: relative;
+  }
+  
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("../img/favicon.png") no-repeat center center;
+    background-size: 60%; /* Adjust as needed */
+    opacity: 0.1;         /* Dim the watermark */
+    z-index: -1;          /* Behind everything */
+  }
+  
+  /* Utility */
+  .hidden {
+    display: none;
+  }
