@@ -9,7 +9,7 @@ let contractABI = null;
  */
 export async function loadABI() {
   try {
-    const response = await fetch('../abis/DecentEscrow_v0.1_ABI.json');
+    const response = await fetch('./abis/DecentEscrow_v0.1_ABI.json');
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
