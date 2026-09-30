@@ -1,6 +1,6 @@
 // js/app.js
 import { formatAddress } from "./wallet.js";
-import { loadABI, initContract, contractAddress } from "./contract.js";
+import { loadABI, initContract, contractAddress, setActiveContractNetwork, getContractConfig } from "./contract.js";
 import { displayOpenWorkOrders } from "./timeline.js";
 import { ethers } from "https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.esm.min.js";
 
@@ -28,6 +28,12 @@ async function connectWallet() {
     provider = providerInstance; // assign globally
     const network = await providerInstance.getNetwork();
     console.log("Connected on network:", network);
+
+    const contractConfig = setActiveContractNetwork(Number(network.chainId));
+    if (!contractConfig.address) {
+      await displayContractAddress();
+      throw new Error(`${contractConfig.label} DecentEscrow is not deployed yet. Select a deployed legacy network in MetaMask or wait for the Base migration deployment.`);
+    }
 
     await displayContractAddress(); // defined below
 
@@ -80,16 +86,10 @@ async function displayContractAddress() {
     42161: "https://arbiscan.io/",
     24734: "https://www.mintme.com/explorer/"
   };
-  const CONTRACT_ADDRESSES = {
-    1: "?",
-    10: "?",
-    137: contractAddress,
-    42161: "?",
-    24734: "?"
-  };
+  const contractConfig = getContractConfig(chainId);
 
-  const explorerBaseUrl = BLOCK_EXPLORERS[chainId] || "#";
-  const contractAddr = CONTRACT_ADDRESSES[chainId] || contractAddress;
+  const explorerBaseUrl = contractConfig.explorer || BLOCK_EXPLORERS[chainId] || "#";
+  const contractAddr = contractConfig.address || "Not deployed on this chain";
   const shortAddressStart = contractAddr.slice(0, 6);
   const shortAddressEnd = contractAddr.slice(-4);
   const chainIcons = {
@@ -102,7 +102,7 @@ async function displayContractAddress() {
 
   contractAddressDisplay.innerHTML = `
     <div id="contract-address-display">
-      <a href="${explorerBaseUrl + "address/" + contractAddr}" target="_blank" class="contract-link">
+      <a href="${contractConfig.address ? explorerBaseUrl + contractAddr : '#'}" target="_blank" class="contract-link">
         <span id="contract-address-start">${shortAddressStart}</span>
         <span class="icons">
           <img src="./img/Eth.gif" alt="Chain Icon" class="icon">

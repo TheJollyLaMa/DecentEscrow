@@ -1,7 +1,32 @@
 // js/contract.js
 import { ethers } from "https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.esm.min.js";
 
-export const contractAddress = "0x9d2CdE04A233A556469f0226B7c0EEEfD8820276";
+export const CONTRACTS = {
+  base: {
+    chainId: 8453,
+    label: 'Base Mainnet',
+    address: '',
+    explorer: 'https://basescan.org/address/',
+  },
+  optimism: {
+    chainId: 10,
+    label: 'Optimism Mainnet (legacy)',
+    address: '0x9d2CdE04A233A556469f0226B7c0EEEfD8820276',
+    explorer: 'https://optimistic.etherscan.io/address/',
+  },
+};
+
+export let contractAddress = '';
+
+export function setActiveContractNetwork(chainId) {
+  const config = Object.values(CONTRACTS).find(entry => entry.chainId === Number(chainId)) || CONTRACTS.base;
+  contractAddress = config.address;
+  return config;
+}
+
+export function getContractConfig(chainId) {
+  return Object.values(CONTRACTS).find(entry => entry.chainId === Number(chainId)) || CONTRACTS.base;
+}
 let contractABI = null;
 
 /**
