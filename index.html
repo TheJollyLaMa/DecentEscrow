@@ -2,6 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" href="./img/favicon.png" type="image/x-icon">
   <title>Decent Escrow DApp</title>
   <link rel="stylesheet" href="./css/base.css">
@@ -11,9 +12,11 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
 </head>
 <body>
+  <decent-header></decent-header>
+  <script type="module" src="./decent-head.js"></script>
 
   <!-- Neon/Carnival Header -->
-  <header class="header">
+  <header class="header" hidden style="display:none">
     <div class="centered-title">
       <div class="title">
         <img src="./img/favicon.png" alt="umbrella" class="favicon">
@@ -41,6 +44,8 @@
 
   <!-- Main Content Area -->
   <div class="content">
+    <p id="legacy-status" role="status">Legacy operations require a connected wallet, a reviewed network and deployed contract code.</p>
+    <p><a href="./default/index.html">Open the default escrow workspace</a></p>
     <!-- Owner-Only Forms (displayed only if connected wallet is contract owner) -->
     <div id="owner-forms" class="hidden">
       <!-- CREATE WORK ORDER -->

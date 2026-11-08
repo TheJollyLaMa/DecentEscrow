@@ -1,0 +1,9 @@
+{
+  "kind": "escrow",
+  "title": "DecentEscrow V1",
+  "contractName": "DecentEscrowV1",
+  "port": 4311,
+  "mode": "unconfigured",
+  "chainId": null,
+  "address": ""
+}
