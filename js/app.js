@@ -1,4 +1,5 @@
 // js/app.js
+import { DecentHead } from '../decent-head.js';
 import { formatAddress } from "./wallet.js";
 import { loadABI, initContract, contractAddress, setActiveContractNetwork, getContractConfig } from "./contract.js";
 import { displayOpenWorkOrders } from "./timeline.js";
@@ -9,30 +10,43 @@ let escrowContract;
 let userAddress;
 let isOwner = false;
 
+function connectionStatus(text) {
+  document.getElementById('account').textContent = text;
+  document.getElementById('legacy-status').textContent = text;
+}
+
 /**
  * Connects the user's wallet, initializes the contract, and sets up the UI.
  */
 async function connectWallet() {
   const walletButton = document.getElementById("connect-wallet");
 
-  if (!window.ethereum) {
+  if (!DecentHead.getWallet().snapshot().connected && !DecentHead.getWallet().available().length) {
     alert("MetaMask is not installed!");
     return;
   }
 
   try {
-    const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
-    userAddress = accounts[0];
+    const session = DecentHead.getWallet();
+    if (!session.snapshot().connected) await session.connect();
+    userAddress = session.snapshot().address;
+    const connectingAddress = userAddress;
 
-    const providerInstance = new ethers.providers.Web3Provider(window.ethereum);
+    const providerInstance = new ethers.providers.Web3Provider(session.rawProvider, 'any');
     provider = providerInstance; // assign globally
     const network = await providerInstance.getNetwork();
     console.log("Connected on network:", network);
 
     const contractConfig = setActiveContractNetwork(Number(network.chainId));
+    if (contractConfig.chainId !== Number(network.chainId)) {
+      throw new Error(`Unsupported legacy chain: ${network.chainId}. Select a reviewed deployment in your wallet.`);
+    }
     if (!contractConfig.address) {
       await displayContractAddress();
       throw new Error(`${contractConfig.label} DecentEscrow is not deployed yet. Select a deployed legacy network in MetaMask or wait for the Base migration deployment.`);
+    }
+    if ((await providerInstance.getCode(contractConfig.address)) === '0x') {
+      throw new Error('No contract code at the configured legacy escrow address. Operations are unavailable.');
     }
 
     await displayContractAddress(); // defined below
@@ -51,7 +65,12 @@ async function connectWallet() {
 
     // Check if connected wallet is contract owner
     const ownerAddress = await escrowContract.owner();
+    if (session.snapshot().address !== connectingAddress ||
+        Number(BigInt(session.snapshot().chainId)) !== Number(network.chainId)) {
+      throw new Error('Wallet session changed; reconnect and review again');
+    }
     isOwner = (userAddress.toLowerCase() === ownerAddress.toLowerCase());
+    document.getElementById('legacy-status').textContent = `Legacy deployment verified on chain ${network.chainId}; contract ${contractConfig.address}. Review each operation before signing.`;
     const ownerFormsContainer = document.getElementById("owner-forms");
     if (isOwner) {
       ownerFormsContainer.classList.remove("hidden");
@@ -63,6 +82,9 @@ async function connectWallet() {
       displayOpenWorkOrders(escrowContract, userAddress, "worker");
     }
   } catch (error) {
+    escrowContract = null; userAddress = null; isOwner = false;
+    document.getElementById("owner-forms").classList.add("hidden");
+    connectionStatus(error.message);
     console.error("Error connecting wallet:", error);
     walletButton.classList.remove("connected");
     walletButton.classList.add("disconnected");
@@ -70,6 +92,12 @@ async function connectWallet() {
 }
 
 document.getElementById("connect-wallet").addEventListener("click", connectWallet);
+DecentHead.on('wallet', state => {
+  escrowContract = null; userAddress = null; isOwner = false;
+  document.getElementById('owner-forms').classList.add('hidden');
+  connectionStatus(state.connected ? 'Verifying legacy network…' : 'Disconnected; legacy operations unavailable.');
+  if (state.connected) void connectWallet();
+});
 
 /**
  * Displays the contract address in the footer.

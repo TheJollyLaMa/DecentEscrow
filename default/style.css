@@ -1,0 +1,21 @@
+:root { color-scheme: dark; font: 16px/1.5 system-ui, sans-serif; background: #101923; color: #eef4fa; }
+* { box-sizing: border-box; }
+body { margin: 0; }
+main { max-width: 900px; margin: auto; padding: 24px 16px 48px; }
+h1 { margin: 4px 0 12px; font-size: clamp(2rem, 7vw, 3rem); }
+h2 { font-size: 1.25rem; margin-top: 0; }
+.eyebrow { color: #9cdbc7; letter-spacing: .04em; }
+section, aside { background: #192735; border: 1px solid #53687b; padding: 20px; margin: 18px 0; border-radius: 12px; }
+aside { background: #302a16; }
+label { display: block; margin: 12px 0; }
+input, select, button { font: inherit; border-radius: 6px; border: 1px solid #8698aa; padding: 10px; }
+input, select { display: block; width: 100%; margin-top: 6px; background: #101923; color: #eef4fa; min-width: 0; }
+button { background: #a7e5cd; color: #101923; cursor: pointer; margin: 6px 6px 6px 0; font-weight: 650; }
+button:disabled { opacity: .5; cursor: not-allowed; }
+button:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid #ffdb86; outline-offset: 3px; }
+pre, #record, #connection, #test-token, footer { white-space: pre-wrap; overflow-wrap: anywhere; }
+pre { max-height: 400px; overflow: auto; font-size: .85rem; }
+footer { color: #c3ceda; font-size: .9rem; margin-top: 24px; }
+.error { color: #ffc0b5; }
+.success { color: #a7e5cd; }
+[hidden] { display: none !important; }
